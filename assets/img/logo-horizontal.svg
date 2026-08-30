@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 80" fill="none">
+  <g>
+    <path d="M40 2 L64 10.5 V26 C64 39 55 48 40 53 C25 48 16 39 16 26 V10.5 Z" fill="#0a2a4a" transform="translate(-8,4) scale(0.85)"/>
+    <path d="M40 5.5 L60 12.4 V26 C60 37.4 52.5 44.9 40 49.4 C27.5 44.9 20 37.4 20 26 V12.4 Z" fill="#1c4f80" transform="translate(-8,4) scale(0.85)"/>
+    <g transform="translate(-8,4) scale(0.85) rotate(-25 40 27)" opacity="0.9">
+      <ellipse cx="40" cy="27" rx="14.5" ry="6" fill="none" stroke="#d4a72c" stroke-width="1.9"/>
+      <circle cx="54.5" cy="27" r="2.4" fill="#d4a72c"/>
+    </g>
+    <text x="40" y="39" font-family="Poppins, 'Arial Black', Arial, sans-serif" font-size="23" font-weight="800" fill="#d4a72c" text-anchor="middle" transform="translate(-8,4) scale(0.85)">W</text>
+  </g>
+  <text x="82" y="38" font-family="Poppins, 'Segoe UI', sans-serif" font-size="21" font-weight="800" letter-spacing="0.2" fill="#0a2a4a">WEST HIGH SCIENCE OLYMPIAD</text>
+  <text x="82" y="58" font-family="Inter, 'Segoe UI', sans-serif" font-size="13" font-weight="700" letter-spacing="2" fill="#b6891a">WARRIORS &#183; WEST TORRANCE, CA</text>
+</svg>

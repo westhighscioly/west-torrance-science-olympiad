@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sponsorship Packet | West High Science Olympiad</title>
+<meta name="description" content="View the West High School Science Olympiad team's sponsorship packet — tiers, benefits, and how to partner with us.">
+<link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  .pdf-viewer-section { background: var(--color-surface-alt); padding: 32px 0 64px; }
+  .pdf-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .pdf-toolbar .status { font-size: 0.88rem; color: var(--color-ink-500); }
+  .pdf-pages {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  .pdf-pages canvas {
+    max-width: 100%;
+    height: auto;
+    box-shadow: 0 10px 28px rgba(10,42,74,0.18);
+    border-radius: 4px;
+    background: #fff;
+  }
+  .pdf-loading, .pdf-error {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--color-ink-500);
+  }
+  .pdf-error a { color: var(--color-primary-700); text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav">
+    <a href="index.html" class="brand">
+      <img src="assets/img/logo.svg" alt="West High Science Olympiad shield logo" class="brand-mark">
+      <span class="brand-text"><strong>West High Science Olympiad</strong><span>West Torrance, CA</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="team.html">Board</a></li>
+      <li><a href="schedule.html">Schedule</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="sponsors.html">Sponsors</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="sponsors.html" class="btn btn-ghost">&larr; Back to Sponsors</a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<section class="page-header">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">Home</a> / <a href="sponsors.html">Sponsors</a> / Sponsorship Packet</div>
+    <h1>Sponsorship Packet</h1>
+    <p>Tiers, benefits, and how to partner with West High Science Olympiad.</p>
+  </div>
+</section>
+
+<section class="pdf-viewer-section">
+  <div class="container" style="max-width:820px;">
+    <div class="pdf-toolbar">
+      <span class="status" id="pdf-status">Loading packet&hellip;</span>
+      <a href="assets/docs/West_High_Science_Olympiad_Sponsorship_Packet.pdf" class="btn btn-ghost" download>Save PDF</a>
+    </div>
+    <div id="pdf-pages" class="pdf-pages">
+      <div class="pdf-loading" id="pdf-loading">Loading sponsorship packet&hellip;</div>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+  const PDF_URL = "assets/docs/West_High_Science_Olympiad_Sponsorship_Packet.pdf";
+  const pagesEl = document.getElementById("pdf-pages");
+  const statusEl = document.getElementById("pdf-status");
+  const loadingEl = document.getElementById("pdf-loading");
+
+  if (window.pdfjsLib) {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+    pdfjsLib.getDocument(PDF_URL).promise.then(function (pdf) {
+      loadingEl.remove();
+      statusEl.textContent = pdf.numPages + " page" + (pdf.numPages === 1 ? "" : "s");
+
+      const renderPage = function (pageNum) {
+        return pdf.getPage(pageNum).then(function (page) {
+          const outputScale = window.devicePixelRatio || 1;
+          const viewport = page.getViewport({ scale: 1.8 });
+          const canvas = document.createElement("canvas");
+          canvas.width = Math.floor(viewport.width * outputScale);
+          canvas.height = Math.floor(viewport.height * outputScale);
+          canvas.style.width = Math.floor(viewport.width) + "px";
+          pagesEl.appendChild(canvas);
+          const ctx = canvas.getContext("2d");
+          const transform = outputScale !== 1 ? [outputScale, 0, 0, outputScale, 0, 0] : null;
+          return page.render({ canvasContext: ctx, viewport: viewport, transform: transform }).promise;
+        });
+      };
+
+      let chain = Promise.resolve();
+      for (let i = 1; i <= pdf.numPages; i++) {
+        chain = chain.then(function () { return renderPage(arguments.length ? arguments[0] : i); }.bind(null, i));
+      }
+    }).catch(function (err) {
+      loadingEl.outerHTML = '<div class="pdf-error">Couldn\'t load the preview. <a href="' + PDF_URL + '" download>Download the PDF directly</a> instead.</div>';
+      statusEl.textContent = "";
+      console.error(err);
+    });
+  } else {
+    loadingEl.outerHTML = '<div class="pdf-error">Couldn\'t load the preview. <a href="' + PDF_URL + '" download>Download the PDF directly</a> instead.</div>';
+  }
+</script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

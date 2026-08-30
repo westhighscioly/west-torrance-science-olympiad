@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <path d="M32 2 L59 12 V30 C59 46 48 57 32 62 C16 57 5 46 5 30 V12 Z" fill="#0a2a4a"/>
+  <path d="M32 6 L55 14.5 V30 C55 44 45.5 53.5 32 58 C18.5 53.5 9 44 9 30 V14.5 Z" fill="#1c4f80"/>
+  <g transform="rotate(-25 32 32)" opacity="0.9">
+    <ellipse cx="32" cy="32" rx="17" ry="7" fill="none" stroke="#d4a72c" stroke-width="1.6"/>
+    <circle cx="49" cy="32" r="2.1" fill="#d4a72c"/>
+  </g>
+  <text x="32" y="41" font-family="Poppins, 'Arial Black', Arial, sans-serif" font-size="27" font-weight="800" fill="#d4a72c" text-anchor="middle">W</text>
+</svg>
