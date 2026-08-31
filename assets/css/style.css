@@ -245,19 +245,26 @@ img { max-width: 100%; display: block; }
 .hero {
   position: relative;
   overflow: hidden;
-  /* Drop a photo in and set --hero-img on this element (e.g. assets/img/hero-home.jpg) —
-     layers stack on top of it, so the page looks the same today and upgrades once it's added.
-     No color tint on the photo itself — a plain navy background shows when there's no photo,
-     and a text-shadow (below) keeps the text readable once a photo is added. */
+  /* Drop a photo in by setting background-image directly on this element inline
+     (e.g. style="background-image:url('assets/img/hero-home.png')") — a plain navy
+     background shows when there's no photo, and a text-shadow (below) keeps the text
+     readable once a photo is added. The decorative gold glow lives on ::before so it
+     never fights with the photo's own background-image value. */
   background-color: var(--color-primary-900);
-  background-image: radial-gradient(1200px 600px at 85% -10%, rgba(212,167,44,0.25), transparent),
-              var(--hero-img, none);
-  background-size: cover, cover;
-  background-position: center, center;
-  background-repeat: no-repeat, no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   color: #fff;
   padding: 96px 0 110px;
 }
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(1200px 600px at 85% -10%, rgba(212,167,44,0.25), transparent);
+  pointer-events: none;
+}
+.hero > .container { position: relative; z-index: 1; }
 .hero .eyebrow {
   color: var(--color-gold-500);
   background: rgba(10,42,74,0.65);
@@ -474,11 +481,11 @@ img { max-width: 100%; display: block; }
    ========================================================================== */
 
 .page-header {
-  /* Drop a photo in and set --hero-img on this element (e.g. assets/img/hero-about.jpg) —
-     no color tint on the photo itself; a plain navy background shows when there's no photo,
-     and a text-shadow keeps the text readable once a photo is added. */
+  /* Drop a photo in by setting background-image directly on this element inline
+     (e.g. style="background-image:url('assets/img/hero-about.jpg')") — no color tint
+     on the photo itself; a plain navy background shows when there's no photo, and a
+     text-shadow keeps the text readable once a photo is added. */
   background-color: var(--color-primary-900);
-  background-image: var(--hero-img, none);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -809,7 +816,7 @@ tbody tr:last-child td { border-bottom: none; }
      sides by "cover" sizing — switch the photo layer to "contain" so everyone stays
      visible (letterboxed by the gradient) instead of being cut off. Extra bottom
      padding makes room so the contained photo isn't clipped by the box itself. */
-  .hero { background-size: cover, contain; background-position: center, bottom center; padding-bottom: 320px; }
+  .hero { background-size: contain; background-position: bottom center; padding-bottom: 320px; }
   .page-header { background-size: contain; background-position: bottom center; padding-bottom: 220px; }
 }
 
