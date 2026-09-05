@@ -64,16 +64,40 @@ document.addEventListener("DOMContentLoaded", () => {
     const timer = setInterval(tick, 1000);
   }
 
-  /* Contact form — client-side only, no backend wired up */
+  /* Contact form — submits via FormSubmit.co (forwards to the team Gmail), no backend of our own needed */
   const contactForm = document.querySelector("#contact-form");
   if (contactForm) {
     contactForm.addEventListener("submit", (e) => {
       e.preventDefault();
       const note = document.querySelector("#form-note");
+      const submitBtn = contactForm.querySelector('button[type="submit"]');
+      if (submitBtn) submitBtn.disabled = true;
       if (note) {
-        note.textContent = "This form isn't connected to email yet — please reach out directly using the contact details on this page.";
-        note.style.color = "var(--color-gold-600)";
+        note.textContent = "Sending…";
+        note.style.color = "var(--color-ink-500)";
       }
+      fetch(contactForm.action, {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: new FormData(contactForm),
+      })
+        .then((res) => {
+          if (!res.ok) throw new Error("Request failed");
+          if (note) {
+            note.textContent = "Thanks! Your message has been sent — we'll get back to you soon.";
+            note.style.color = "var(--color-gold-600)";
+          }
+          contactForm.reset();
+        })
+        .catch(() => {
+          if (note) {
+            note.textContent = "Something went wrong sending that. Please email us directly using the address on this page.";
+            note.style.color = "var(--color-gold-600)";
+          }
+        })
+        .finally(() => {
+          if (submitBtn) submitBtn.disabled = false;
+        });
     });
   }
 
